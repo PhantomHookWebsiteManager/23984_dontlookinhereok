@@ -1,2 +1,1 @@
-HitChance Fix
-Slient Fix
+Version Update
