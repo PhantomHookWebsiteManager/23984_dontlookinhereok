@@ -1,3 +1,1 @@
-Sticky Aim
-Slient Fix
-Config Fix
+Fixed Sticky Aim
