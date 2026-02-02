@@ -1,1 +1,2 @@
-Auto Launch Roblox
+Fixed Sticky Aim
+Fixed Keybind scale
