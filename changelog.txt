@@ -1,2 +1,1 @@
-chams outline
-smoother overlay less crashes
+fixed hitpart config error
