@@ -1,2 +1,2 @@
-Fixed Sticky Aim
-Fixed Keybind scale
+chams outline
+smoother overlay less crashes
