@@ -1,1 +1,4 @@
-fixed hitpart config error
+new read/write
+box padding fix
+better slient aim
+fixed chams sizes
