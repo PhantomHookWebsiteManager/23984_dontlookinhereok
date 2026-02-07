@@ -1,5 +1,2 @@
-new read/write
-box padding fix
-better slient aim
-fixed chams sizes
-forgot to remove draw fps :sob
+better aimbot
+working sticky aim
