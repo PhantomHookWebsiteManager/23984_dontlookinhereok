@@ -1,2 +1,4 @@
-better aimbot
-working sticky aim
+tab highlighting
+fixed sticky again 
+fixed padding
+added distance check
