@@ -1,4 +1,1 @@
-tab highlighting
-fixed sticky again 
-fixed padding
-added distance check
+fixed external
