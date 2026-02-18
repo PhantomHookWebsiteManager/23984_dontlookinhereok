@@ -209,6 +209,8 @@ local Library = {
         WhiteColor = Color3.new(1, 1, 1),
     },
 
+    UITransparency = 0.25, -- global transparency for main panels
+
     Registry = {},
     Scales = {},
 
@@ -1131,7 +1133,29 @@ do
     HUDFrame.Position = UDim2.new(1, -6, 0, 6)
     HUDFrame.Size = UDim2.new(0, 220, 1, -12)
     HUDFrame.ZIndex = 100
+    HUDFrame.Visible = true
     HUDFrame.Parent = ScreenGui
+    Library._HUDFrame = HUDFrame
+
+    function Library:SetHUDVisible(visible)
+        Library._HUDVisible = visible
+        if visible then
+            HUDFrame.Visible = true
+            TweenService:Create(HUDFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Position = UDim2.new(1, -6, 0, 6),
+            }):Play()
+        else
+            local t = TweenService:Create(HUDFrame, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+                Position = UDim2.new(1, 40, 0, 6),
+            })
+            t:Play()
+            t.Completed:Connect(function()
+                HUDFrame.Visible = false
+                HUDFrame.Position = UDim2.new(1, -6, 0, 6)
+            end)
+        end
+    end
+    Library._HUDVisible = true
 
     ActiveFeaturesContainer = Instance.new("Frame")
     ActiveFeaturesContainer.Name = "Items"
@@ -6342,6 +6366,7 @@ function Library:CreateWindow(WindowInfo)
             BackgroundColor3 = function()
                 return Library.Scheme.BackgroundColor
             end,
+            BackgroundTransparency = Library.UITransparency,
             Name = "Main",
             Text = "",
             Position = WindowInfo.Position,
@@ -6596,6 +6621,7 @@ function Library:CreateWindow(WindowInfo)
         Tabs = New("ScrollingFrame", {
             AutomaticCanvasSize = Enum.AutomaticSize.Y,
             BackgroundColor3 = "BackgroundColor",
+            BackgroundTransparency = Library.UITransparency + 0.1,
             CanvasSize = UDim2.fromScale(0, 0),
             Position = UDim2.fromOffset(0, 45),
             ScrollBarThickness = 0,
@@ -6617,6 +6643,7 @@ function Library:CreateWindow(WindowInfo)
             BackgroundColor3 = function()
                 return Library:GetBetterColor(Library.Scheme.BackgroundColor, 5)
             end,
+            BackgroundTransparency = Library.UITransparency,
             Name = "Container",
             Position = UDim2.new(1, 0, 0, 45),
             Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -66),
