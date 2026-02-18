@@ -209,7 +209,7 @@ local Library = {
         WhiteColor = Color3.new(1, 1, 1),
     },
 
-    UITransparency = 0.25, -- global transparency for main panels
+    UITransparency = 0.6, -- global transparency for main panels
 
     Registry = {},
     Scales = {},
@@ -6393,7 +6393,7 @@ function Library:CreateWindow(WindowInfo)
         DividerLine = New("Frame", {
             BackgroundColor3 = "OutlineColor",
             Position = UDim2.fromOffset(InitialLeftWidth, 0),
-            Size = UDim2.new(0, 1, 1, -20),
+            Size = UDim2.new(0, 1, 1, 0),
             Parent = MainFrame,
         })
 
@@ -6579,53 +6579,26 @@ function Library:CreateWindow(WindowInfo)
             })
         end
 
-        --// Bottom Bar \\--
-        local BottomBackground = New("Frame", {
-            AnchorPoint = Vector2.new(0, 1),
-            BackgroundColor3 = function()
-                return Library:GetBetterColor(Library.Scheme.BackgroundColor, 4)
-            end,
-            Position = UDim2.fromScale(0, 1),
-            Size = UDim2.new(1, 0, 0, WindowInfo.CornerRadius * 2),
+        -- Gradient overlay for visual depth (diagonal indigo glow top-left)
+        New("UIGradient", {
+            Color = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 27, 75)),
+                ColorSequenceKeypoint.new(0.5, Color3.fromRGB(10, 10, 15)),
+                ColorSequenceKeypoint.new(1, Color3.fromRGB(6, 6, 12)),
+            }),
+            Rotation = 135,
             Parent = MainFrame,
-        })
-        Library:MakeLine(MainFrame, {
-            AnchorPoint = Vector2.new(0, 1),
-            Position = UDim2.new(0, 0, 1, -20),
-            Size = UDim2.new(1, 0, 0, 1),
-        })
-
-        local BottomBar = New("Frame", {
-            AnchorPoint = Vector2.new(0, 1),
-            BackgroundTransparency = 1,
-            Position = UDim2.fromScale(0, 1),
-            Size = UDim2.new(1, 0, 0, 20),
-            Parent = MainFrame,
-        })
-        New("UICorner", {
-            CornerRadius = UDim.new(0, WindowInfo.CornerRadius),
-            Parent = BottomBackground,
-        })
-
-        --// Footer
-        New("TextLabel", {
-            BackgroundTransparency = 1,
-            Size = UDim2.fromScale(1, 1),
-            Text = WindowInfo.Footer,
-            TextSize = 12,
-            TextTransparency = 0.6,
-            Parent = BottomBar,
         })
 
         --// Tabs \\--
         Tabs = New("ScrollingFrame", {
             AutomaticCanvasSize = Enum.AutomaticSize.Y,
             BackgroundColor3 = "BackgroundColor",
-            BackgroundTransparency = Library.UITransparency + 0.1,
+            BackgroundTransparency = Library.UITransparency + 0.15,
             CanvasSize = UDim2.fromScale(0, 0),
             Position = UDim2.fromOffset(0, 45),
             ScrollBarThickness = 0,
-            Size = UDim2.new(0, InitialLeftWidth, 1, -66),
+            Size = UDim2.new(0, InitialLeftWidth, 1, -46),
             Parent = MainFrame,
         })
         New("UIPadding", {
@@ -6646,7 +6619,7 @@ function Library:CreateWindow(WindowInfo)
             BackgroundTransparency = Library.UITransparency,
             Name = "Container",
             Position = UDim2.new(1, 0, 0, 45),
-            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -66),
+            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -46),
             Parent = MainFrame,
         })
         New("UIPadding", {
