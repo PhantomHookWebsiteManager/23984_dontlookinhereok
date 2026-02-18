@@ -5040,6 +5040,11 @@ do
                         Table:UpdateButton()
                         Dropdown:Display()
 
+                        -- Auto-close for single-select dropdowns
+                        if not Info.Multi then
+                            MenuTable:Close()
+                        end
+
                         Library:UpdateDependencyBoxes()
                         Library:SafeCallback(Dropdown.Callback, Dropdown.Value)
                         Library:SafeCallback(Dropdown.Changed, Dropdown.Value)
