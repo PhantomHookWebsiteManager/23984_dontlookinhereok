@@ -5947,14 +5947,14 @@ do
             Library:AddOutline(DepGroupboxContainer)
 
             DepGroupboxList = New("UIListLayout", {
-                Padding = UDim.new(0, 8),
+                Padding = UDim.new(0, 4),
                 Parent = DepGroupboxContainer,
             })
             New("UIPadding", {
-                PaddingBottom = UDim.new(0, 7),
+                PaddingBottom = UDim.new(0, 5),
                 PaddingLeft = UDim.new(0, 7),
                 PaddingRight = UDim.new(0, 7),
-                PaddingTop = UDim.new(0, 7),
+                PaddingTop = UDim.new(0, 5),
                 Parent = DepGroupboxContainer,
             })
         end
@@ -5973,7 +5973,7 @@ do
         }
 
         function DepGroupbox:Resize()
-            DepGroupboxContainer.Size = UDim2.new(1, 0, 0, (DepGroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 18)
+            DepGroupboxContainer.Size = UDim2.new(1, 0, 0, (DepGroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 14)
         end
 
         function DepGroupbox:Update(CancelSearch)
@@ -6382,7 +6382,7 @@ function Library:CreateWindow(WindowInfo)
         )
         Library:AddOutline(MainFrame)
         Library:MakeLine(MainFrame, {
-            Position = UDim2.fromOffset(0, 44),
+            Position = UDim2.fromOffset(0, 36),
             Size = UDim2.new(1, 0, 0, 1),
         })
 
@@ -6413,7 +6413,7 @@ function Library:CreateWindow(WindowInfo)
         --// Top Bar \\-
         local TopBar = New("Frame", {
             BackgroundTransparency = 1,
-            Size = UDim2.new(1, 0, 0, 44),
+            Size = UDim2.new(1, 0, 0, 36),
             Parent = MainFrame,
         })
         Library:MakeDraggable(MainFrame, TopBar, false, true)
@@ -6592,9 +6592,9 @@ function Library:CreateWindow(WindowInfo)
             BackgroundColor3 = "BackgroundColor",
             BackgroundTransparency = Library.UITransparency + 0.15,
             CanvasSize = UDim2.fromScale(0, 0),
-            Position = UDim2.fromOffset(0, 45),
+            Position = UDim2.fromOffset(0, 37),
             ScrollBarThickness = 0,
-            Size = UDim2.new(0, InitialLeftWidth, 1, -46),
+            Size = UDim2.new(0, InitialLeftWidth, 1, -38),
             Parent = MainFrame,
         })
         New("UIPadding", {
@@ -6614,8 +6614,8 @@ function Library:CreateWindow(WindowInfo)
             end,
             BackgroundTransparency = Library.UITransparency,
             Name = "Container",
-            Position = UDim2.new(1, 0, 0, 45),
-            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -46),
+            Position = UDim2.new(1, 0, 0, 37),
+            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -38),
             Parent = MainFrame,
         })
         New("UIPadding", {
@@ -7089,12 +7089,12 @@ function Library:CreateWindow(WindowInfo)
                 Parent = Info.Side == 1 and TabLeft or TabRight,
             })
             New("UIListLayout", {
-                Padding = UDim.new(0, 6),
+                Padding = UDim.new(0, 4),
                 Parent = BoxHolder,
             })
             New("UIPadding", {
-                PaddingBottom = UDim.new(0, 4),
-                PaddingTop = UDim.new(0, 4),
+                PaddingBottom = UDim.new(0, 2),
+                PaddingTop = UDim.new(0, 2),
                 Parent = BoxHolder,
             })
 
@@ -7118,7 +7118,7 @@ function Library:CreateWindow(WindowInfo)
 
                 -- Very subtle separator under header
                 Library:MakeLine(GroupboxHolder, {
-                    Position = UDim2.fromOffset(0, 28),
+                    Position = UDim2.fromOffset(0, 22),
                     Size = UDim2.new(1, 0, 0, 1),
                 })
 
@@ -7139,7 +7139,7 @@ function Library:CreateWindow(WindowInfo)
                 GroupboxLabel = New("TextLabel", {
                     BackgroundTransparency = 1,
                     Position = UDim2.fromOffset(BoxIcon and 28 or 0, 0),
-                    Size = UDim2.new(1, 0, 0, 28),
+                    Size = UDim2.new(1, 0, 0, 22),
                     Text = Info.Name,
                     TextSize = 12,
                     TextTransparency = 0.35,
@@ -7154,20 +7154,20 @@ function Library:CreateWindow(WindowInfo)
 
                 GroupboxContainer = New("Frame", {
                     BackgroundTransparency = 1,
-                    Position = UDim2.fromOffset(0, 29),
-                    Size = UDim2.new(1, 0, 1, -29),
+                    Position = UDim2.fromOffset(0, 23),
+                    Size = UDim2.new(1, 0, 1, -23),
                     Parent = GroupboxHolder,
                 })
 
                 GroupboxList = New("UIListLayout", {
-                    Padding = UDim.new(0, 6),
+                    Padding = UDim.new(0, 4),
                     Parent = GroupboxContainer,
                 })
                 New("UIPadding", {
-                    PaddingBottom = UDim.new(0, 8),
-                    PaddingLeft = UDim.new(0, 10),
-                    PaddingRight = UDim.new(0, 10),
-                    PaddingTop = UDim.new(0, 8),
+                    PaddingBottom = UDim.new(0, 5),
+                    PaddingLeft = UDim.new(0, 8),
+                    PaddingRight = UDim.new(0, 8),
+                    PaddingTop = UDim.new(0, 5),
                     Parent = GroupboxContainer,
                 })
             end
@@ -7183,7 +7183,7 @@ function Library:CreateWindow(WindowInfo)
             }
 
             function Groupbox:Resize()
-                GroupboxHolder.Size = UDim2.new(1, 0, 0, (GroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 49)
+                GroupboxHolder.Size = UDim2.new(1, 0, 0, (GroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 33)
             end
 
             setmetatable(Groupbox, BaseGroupbox)
@@ -7210,12 +7210,12 @@ function Library:CreateWindow(WindowInfo)
                 Parent = Info.Side == 1 and TabLeft or TabRight,
             })
             New("UIListLayout", {
-                Padding = UDim.new(0, 6),
+                Padding = UDim.new(0, 4),
                 Parent = BoxHolder,
             })
             New("UIPadding", {
-                PaddingBottom = UDim.new(0, 4),
-                PaddingTop = UDim.new(0, 4),
+                PaddingBottom = UDim.new(0, 2),
+                PaddingTop = UDim.new(0, 2),
                 Parent = BoxHolder,
             })
 
