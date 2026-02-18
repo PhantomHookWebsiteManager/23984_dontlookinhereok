@@ -1938,12 +1938,9 @@ function Library:AddContextMenu(
             Library:SafeCallback(ActiveCallback, true)
         end
 
-        -- Animate open: pop in from slightly small scale
-        MenuScale.Scale = 0.9
+        -- Show immediately at full scale so AbsoluteSize is correct for hit detection
+        MenuScale.Scale = 1
         Menu.Visible = true
-        TweenService:Create(MenuScale, TweenInfo.new(0.13, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-            Scale = 1,
-        }):Play()
 
         Table.Signal = Holder:GetPropertyChangedSignal("AbsolutePosition"):Connect(function()
             if typeof(Offset) == "function" then
@@ -1965,13 +1962,10 @@ function Library:AddContextMenu(
             return
         end
 
-        -- Animate close: shrink out
+        -- Animate close: fade out
         local ClosingMenu = Menu
         local ClosingScale = MenuScale
-        TweenService:Create(ClosingScale, TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-            Scale = 0.9,
-        }):Play()
-        task.delay(0.08, function()
+        task.delay(0.05, function()
             ClosingMenu.Visible = false
             ClosingScale.Scale = 1
         end)
