@@ -2850,11 +2850,20 @@ do
 
         local Holder = New("TextButton", {
             BackgroundColor3 = ColorPicker.Value,
-            BorderColor3 = Library:GetDarkerColor(ColorPicker.Value),
-            BorderSizePixel = 1,
+            BorderSizePixel = 0,
             Size = UDim2.fromOffset(18, 18),
             Text = "",
             Parent = ToggleLabel,
+        })
+        New("UICorner", {
+            CornerRadius = UDim.new(0, 4),
+            Parent = Holder,
+        })
+        New("UIStroke", {
+            Color = "OutlineColor",
+            Thickness = 1,
+            Transparency = 0.4,
+            Parent = Holder,
         })
 
         local HolderTransparency = New("ImageLabel", {
@@ -2864,6 +2873,10 @@ do
             Size = UDim2.fromScale(1, 1),
             TileSize = UDim2.fromOffset(9, 9),
             Parent = Holder,
+        })
+        New("UICorner", {
+            CornerRadius = UDim.new(0, 4),
+            Parent = HolderTransparency,
         })
 
         --// Color Menu \\--
@@ -2876,22 +2889,34 @@ do
             1
         )
         ColorMenu.List.Padding = UDim.new(0, 8)
+        ColorMenu.Menu.BorderSizePixel = 0
+        New("UICorner", {
+            CornerRadius = UDim.new(0, 8),
+            Parent = ColorMenu.Menu,
+        })
+        New("UIStroke", {
+            Color = "OutlineColor",
+            Thickness = 1,
+            Transparency = 0.5,
+            Parent = ColorMenu.Menu,
+        })
         ColorPicker.ColorMenu = ColorMenu
 
         New("UIPadding", {
-            PaddingBottom = UDim.new(0, 6),
-            PaddingLeft = UDim.new(0, 6),
-            PaddingRight = UDim.new(0, 6),
-            PaddingTop = UDim.new(0, 6),
+            PaddingBottom = UDim.new(0, 8),
+            PaddingLeft = UDim.new(0, 8),
+            PaddingRight = UDim.new(0, 8),
+            PaddingTop = UDim.new(0, 8),
             Parent = ColorMenu.Menu,
         })
 
         if typeof(ColorPicker.Title) == "string" then
             New("TextLabel", {
                 BackgroundTransparency = 1,
-                Size = UDim2.new(1, 0, 0, 8),
+                Size = UDim2.new(1, 0, 0, 12),
                 Text = ColorPicker.Title,
-                TextSize = 14,
+                TextSize = 12,
+                TextTransparency = 0.4,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 Parent = ColorMenu.Menu,
             })
@@ -2915,11 +2940,15 @@ do
             Size = UDim2.fromOffset(200, 200),
             Parent = ColorHolder,
         })
+        New("UICorner", {
+            CornerRadius = UDim.new(0, 6),
+            Parent = SatVipMap,
+        })
 
         local SatVibCursor = New("Frame", {
             AnchorPoint = Vector2.new(0.5, 0.5),
             BackgroundColor3 = "WhiteColor",
-            Size = UDim2.fromOffset(6, 6),
+            Size = UDim2.fromOffset(10, 10),
             Parent = SatVipMap,
         })
         New("UICorner", {
@@ -2928,14 +2957,20 @@ do
         })
         New("UIStroke", {
             Color = "DarkColor",
+            Thickness = 1.5,
             Parent = SatVibCursor,
         })
 
         --// Hue
         local HueSelector = New("TextButton", {
-            Size = UDim2.fromOffset(16, 200),
+            BorderSizePixel = 0,
+            Size = UDim2.fromOffset(14, 200),
             Text = "",
             Parent = ColorHolder,
+        })
+        New("UICorner", {
+            CornerRadius = UDim.new(0, 4),
+            Parent = HueSelector,
         })
         New("UIGradient", {
             Color = ColorSequence.new(HueSequenceTable),
@@ -2946,28 +2981,45 @@ do
         local HueCursor = New("Frame", {
             AnchorPoint = Vector2.new(0.5, 0.5),
             BackgroundColor3 = "WhiteColor",
-            BorderColor3 = "DarkColor",
-            BorderSizePixel = 1,
+            BorderSizePixel = 0,
             Position = UDim2.fromScale(0.5, ColorPicker.Hue),
-            Size = UDim2.new(1, 2, 0, 1),
+            Size = UDim2.new(1, 4, 0, 3),
             Parent = HueSelector,
+        })
+        New("UICorner", {
+            CornerRadius = UDim.new(1, 0),
+            Parent = HueCursor,
+        })
+        New("UIStroke", {
+            Color = "DarkColor",
+            Thickness = 1,
+            Parent = HueCursor,
         })
 
         --// Alpha
         local TransparencySelector, TransparencyColor, TransparencyCursor
         if Info.Transparency then
             TransparencySelector = New("ImageButton", {
+                BorderSizePixel = 0,
                 Image = CustomImageManager.GetAsset("TransparencyTexture"),
                 ScaleType = Enum.ScaleType.Tile,
-                Size = UDim2.fromOffset(16, 200),
+                Size = UDim2.fromOffset(14, 200),
                 TileSize = UDim2.fromOffset(8, 8),
                 Parent = ColorHolder,
+            })
+            New("UICorner", {
+                CornerRadius = UDim.new(0, 4),
+                Parent = TransparencySelector,
             })
 
             TransparencyColor = New("Frame", {
                 BackgroundColor3 = ColorPicker.Value,
                 Size = UDim2.fromScale(1, 1),
                 Parent = TransparencySelector,
+            })
+            New("UICorner", {
+                CornerRadius = UDim.new(0, 4),
+                Parent = TransparencyColor,
             })
             New("UIGradient", {
                 Rotation = 90,
@@ -2981,47 +3033,83 @@ do
             TransparencyCursor = New("Frame", {
                 AnchorPoint = Vector2.new(0.5, 0.5),
                 BackgroundColor3 = "WhiteColor",
-                BorderColor3 = "DarkColor",
-                BorderSizePixel = 1,
+                BorderSizePixel = 0,
                 Position = UDim2.fromScale(0.5, ColorPicker.Transparency),
-                Size = UDim2.new(1, 2, 0, 1),
+                Size = UDim2.new(1, 4, 0, 3),
                 Parent = TransparencySelector,
+            })
+            New("UICorner", {
+                CornerRadius = UDim.new(1, 0),
+                Parent = TransparencyCursor,
+            })
+            New("UIStroke", {
+                Color = "DarkColor",
+                Thickness = 1,
+                Parent = TransparencyCursor,
             })
         end
 
+        -- Live color preview strip
+        local PreviewStrip = New("Frame", {
+            BackgroundColor3 = ColorPicker.Value,
+            BorderSizePixel = 0,
+            Size = UDim2.new(1, 0, 0, 10),
+            Parent = ColorMenu.Menu,
+        })
+        New("UICorner", {
+            CornerRadius = UDim.new(1, 0),
+            Parent = PreviewStrip,
+        })
+        New("UIStroke", {
+            Color = "OutlineColor",
+            Thickness = 1,
+            Transparency = 0.5,
+            Parent = PreviewStrip,
+        })
+
         local InfoHolder = New("Frame", {
             BackgroundTransparency = 1,
-            Size = UDim2.new(1, 0, 0, 20),
+            Size = UDim2.new(1, 0, 0, 22),
             Parent = ColorMenu.Menu,
         })
         New("UIListLayout", {
             FillDirection = Enum.FillDirection.Horizontal,
             HorizontalFlex = Enum.UIFlexAlignment.Fill,
-            Padding = UDim.new(0, 8),
+            Padding = UDim.new(0, 6),
             Parent = InfoHolder,
         })
 
-        local HueBox = New("TextBox", {
-            BackgroundColor3 = "MainColor",
-            BorderColor3 = "OutlineColor",
-            BorderSizePixel = 1,
-            ClearTextOnFocus = false,
-            Size = UDim2.fromScale(1, 1),
-            Text = "#??????",
-            TextSize = 14,
-            Parent = InfoHolder,
-        })
+        local function StyledBox(placeholder)
+            local Box = New("TextBox", {
+                BackgroundColor3 = "BackgroundColor",
+                BorderSizePixel = 0,
+                ClearTextOnFocus = false,
+                Size = UDim2.fromScale(1, 1),
+                Text = placeholder,
+                TextSize = 12,
+                TextTransparency = 0.3,
+                Parent = InfoHolder,
+            })
+            New("UICorner", {
+                CornerRadius = UDim.new(0, 4),
+                Parent = Box,
+            })
+            New("UIStroke", {
+                Color = "OutlineColor",
+                Thickness = 1,
+                Transparency = 0.5,
+                Parent = Box,
+            })
+            New("UIPadding", {
+                PaddingLeft = UDim.new(0, 5),
+                PaddingRight = UDim.new(0, 5),
+                Parent = Box,
+            })
+            return Box
+        end
 
-        local RgbBox = New("TextBox", {
-            BackgroundColor3 = "MainColor",
-            BorderColor3 = "OutlineColor",
-            BorderSizePixel = 1,
-            ClearTextOnFocus = false,
-            Size = UDim2.fromScale(1, 1),
-            Text = "?, ?, ?",
-            TextSize = 14,
-            Parent = InfoHolder,
-        })
+        local HueBox = StyledBox("#??????")
+        local RgbBox = StyledBox("?, ?, ?")
 
         --// Context Menu \\--
         local ContextMenu = Library:AddContextMenu(Holder, UDim2.fromOffset(93, 0), function()
@@ -3031,12 +3119,32 @@ do
         do
             local function CreateButton(Text, Func)
                 local Button = New("TextButton", {
+                    BackgroundColor3 = "AccentColor",
                     BackgroundTransparency = 1,
-                    Size = UDim2.new(1, 0, 0, 21),
+                    Size = UDim2.new(1, 0, 0, 22),
                     Text = Text,
-                    TextSize = 14,
+                    TextSize = 13,
+                    TextTransparency = 0.35,
                     Parent = ContextMenu.Menu,
                 })
+                New("UIPadding", {
+                    PaddingLeft = UDim.new(0, 8),
+                    PaddingRight = UDim.new(0, 8),
+                    Parent = Button,
+                })
+
+                Button.MouseEnter:Connect(function()
+                    TweenService:Create(Button, Library.TweenInfo, {
+                        BackgroundTransparency = 0.8,
+                        TextTransparency = 0,
+                    }):Play()
+                end)
+                Button.MouseLeave:Connect(function()
+                    TweenService:Create(Button, Library.TweenInfo, {
+                        BackgroundTransparency = 1,
+                        TextTransparency = 0.35,
+                    }):Play()
+                end)
 
                 Button.MouseButton1Click:Connect(function()
                     Library:SafeCallback(Func)
@@ -3073,6 +3181,8 @@ do
             ColorPicker.Hue, ColorPicker.Sat, ColorPicker.Vib = Color:ToHSV()
         end
 
+        local CursorTweenInfo = TweenInfo.new(0.07, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
         function ColorPicker:Display()
             if Library.Unloaded then
                 return
@@ -3080,19 +3190,36 @@ do
 
             ColorPicker.Value = Color3.fromHSV(ColorPicker.Hue, ColorPicker.Sat, ColorPicker.Vib)
 
-            Holder.BackgroundColor3 = ColorPicker.Value
-            Holder.BorderColor3 = Library:GetDarkerColor(ColorPicker.Value)
+            -- Animate swatch color
+            TweenService:Create(Holder, CursorTweenInfo, {
+                BackgroundColor3 = ColorPicker.Value,
+            }):Play()
+            TweenService:Create(PreviewStrip, CursorTweenInfo, {
+                BackgroundColor3 = ColorPicker.Value,
+            }):Play()
             HolderTransparency.ImageTransparency = (1 - ColorPicker.Transparency)
 
-            SatVipMap.BackgroundColor3 = Color3.fromHSV(ColorPicker.Hue, 1, 1)
+            -- Animate saturation map background color
+            TweenService:Create(SatVipMap, CursorTweenInfo, {
+                BackgroundColor3 = Color3.fromHSV(ColorPicker.Hue, 1, 1),
+            }):Play()
             if TransparencyColor then
-                TransparencyColor.BackgroundColor3 = ColorPicker.Value
+                TweenService:Create(TransparencyColor, CursorTweenInfo, {
+                    BackgroundColor3 = ColorPicker.Value,
+                }):Play()
             end
 
-            SatVibCursor.Position = UDim2.fromScale(ColorPicker.Sat, 1 - ColorPicker.Vib)
-            HueCursor.Position = UDim2.fromScale(0.5, ColorPicker.Hue)
+            -- Animate cursors smoothly
+            TweenService:Create(SatVibCursor, CursorTweenInfo, {
+                Position = UDim2.fromScale(ColorPicker.Sat, 1 - ColorPicker.Vib),
+            }):Play()
+            TweenService:Create(HueCursor, CursorTweenInfo, {
+                Position = UDim2.fromScale(0.5, ColorPicker.Hue),
+            }):Play()
             if TransparencyCursor then
-                TransparencyCursor.Position = UDim2.fromScale(0.5, ColorPicker.Transparency)
+                TweenService:Create(TransparencyCursor, CursorTweenInfo, {
+                    Position = UDim2.fromScale(0.5, ColorPicker.Transparency),
+                }):Play()
             end
 
             HueBox.Text = "#" .. ColorPicker.Value:ToHex()
@@ -3494,10 +3621,14 @@ do
                 BackgroundColor3 = Button.Disabled and "BackgroundColor" or "MainColor",
                 Size = UDim2.fromScale(1, 1),
                 Text = Button.Text,
-                TextSize = 14,
+                TextSize = 13,
                 TextTransparency = 0.4,
                 Visible = Button.Visible,
                 Parent = Holder,
+            })
+            New("UICorner", {
+                CornerRadius = UDim.new(0, 4),
+                Parent = Base,
             })
 
             local Stroke = New("UIStroke", {
@@ -3516,6 +3647,7 @@ do
                 end
 
                 Button.Tween = TweenService:Create(Button.Base, Library.TweenInfo, {
+                    BackgroundColor3 = Library:GetLighterColor(Library.Scheme.MainColor),
                     TextTransparency = 0,
                 })
                 Button.Tween:Play()
@@ -3526,6 +3658,7 @@ do
                 end
 
                 Button.Tween = TweenService:Create(Button.Base, Library.TweenInfo, {
+                    BackgroundColor3 = Library.Scheme.MainColor,
                     TextTransparency = 0.4,
                 })
                 Button.Tween:Play()
@@ -4647,14 +4780,23 @@ do
             Active = not Dropdown.Disabled,
             AnchorPoint = Vector2.new(0, 1),
             BackgroundColor3 = "MainColor",
-            BorderColor3 = "OutlineColor",
-            BorderSizePixel = 1,
+            BorderSizePixel = 0,
             Position = UDim2.fromScale(0, 1),
             Size = UDim2.new(1, 0, 0, 21),
             Text = "...",
-            TextSize = 14,
+            TextSize = 13,
             TextXAlignment = Enum.TextXAlignment.Left,
             Parent = Holder,
+        })
+        New("UICorner", {
+            CornerRadius = UDim.new(0, 4),
+            Parent = Display,
+        })
+        New("UIStroke", {
+            Color = "OutlineColor",
+            Thickness = 1,
+            Transparency = 0.5,
+            Parent = Display,
         })
 
         New("UIPadding", {
@@ -4704,8 +4846,10 @@ do
             2,
             function(Active: boolean)
                 Display.TextTransparency = (Active and SearchBox) and 1 or 0
-                ArrowImage.ImageTransparency = Active and 0 or 0.5
-                ArrowImage.Rotation = Active and 180 or 0
+                TweenService:Create(ArrowImage, Library.TweenInfo, {
+                    ImageTransparency = Active and 0 or 0.5,
+                    Rotation = Active and 180 or 0,
+                }):Play()
                 if SearchBox then
                     SearchBox.Text = ""
                     SearchBox.Visible = Active
@@ -4802,15 +4946,19 @@ do
                 local Table = {}
 
                 local Button = New("TextButton", {
-                    BackgroundColor3 = "MainColor",
+                    BackgroundColor3 = "AccentColor",
                     BackgroundTransparency = 1,
                     LayoutOrder = IsDisabled and 1 or 0,
                     Size = UDim2.new(1, 0, 0, 21),
                     Text = tostring(Value),
-                    TextSize = 14,
+                    TextSize = 13,
                     TextTransparency = 0.5,
                     TextXAlignment = Enum.TextXAlignment.Left,
                     Parent = MenuTable.Menu,
+                })
+                New("UICorner", {
+                    CornerRadius = UDim.new(0, 4),
+                    Parent = Button,
                 })
                 New("UIPadding", {
                     PaddingLeft = UDim.new(0, 7),
@@ -4818,12 +4966,20 @@ do
                     Parent = Button,
                 })
 
-                local Selected
-                if Info.Multi then
-                    Selected = Dropdown.Value[Value]
-                else
-                    Selected = Dropdown.Value == Value
-                end
+                Button.MouseEnter:Connect(function()
+                    if IsDisabled then return end
+                    TweenService:Create(Button, Library.TweenInfo, {
+                        BackgroundTransparency = 0.85,
+                    }):Play()
+                end)
+                Button.MouseLeave:Connect(function()
+                    if IsDisabled then return end
+                    -- only reset if not selected
+                    local sel = Info.Multi and Dropdown.Value[Value] or Dropdown.Value == Value
+                    TweenService:Create(Button, Library.TweenInfo, {
+                        BackgroundTransparency = sel and 0.75 or 1,
+                    }):Play()
+                end)
 
                 function Table:UpdateButton()
                     if Info.Multi then
@@ -4832,8 +4988,12 @@ do
                         Selected = Dropdown.Value == Value
                     end
 
-                    Button.BackgroundTransparency = Selected and 0 or 1
-                    Button.TextTransparency = IsDisabled and 0.8 or Selected and 0 or 0.5
+                    TweenService:Create(Button, Library.TweenInfo, {
+                        BackgroundTransparency = Selected and 0.75 or 1,
+                        TextTransparency = IsDisabled and 0.8 or Selected and 0 or 0.5,
+                    }):Play()
+                    Button.TextColor3 = Selected and Library.Scheme.AccentColor or Library.Scheme.FontColor
+                    Library.Registry[Button].TextColor3 = Selected and "AccentColor" or "FontColor"
                 end
 
                 if not IsDisabled then
