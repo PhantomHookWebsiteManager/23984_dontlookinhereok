@@ -1152,17 +1152,14 @@ do
 
     Library._HUDOrder = 0
 
+    Library._HUDRows = {} -- keyed by entry name, stores the row Frame
+
     function Library:RefreshActiveHUD()
-        for _, child in ActiveFeaturesContainer:GetChildren() do
-            if child:IsA("Frame") or child:IsA("TextLabel") then
-                child:Destroy()
-            end
-        end
         Library._HUDOrder = 0
 
         local sorted = {}
 
-        -- Enabled toggles: show "Name | True"
+        -- Enabled toggles
         for idx, toggle in Library.Toggles do
             if toggle.Value == true then
                 local name = tostring(toggle.Text or idx)
@@ -1170,7 +1167,7 @@ do
             end
         end
 
-        -- Sliders: always show their current value
+        -- Sliders + Dropdowns
         for idx, option in Library.Options do
             if option.Type == "Slider" then
                 local name = tostring(option.Text or idx)
@@ -1192,7 +1189,7 @@ do
             end
         end
 
-        -- Sort by actual rendered pixel width so proportional font chars are accounted for
+        -- Sort by actual rendered pixel width
         local HUDFont = Font.fromEnum(Enum.Font.Nunito)
         local HUDSize = 12
         for _, entry in sorted do
@@ -1204,49 +1201,94 @@ do
             return a._px > b._px
         end)
 
+        -- Build a set of names that should exist this frame
+        local newKeys = {}
+        for _, entry in sorted do
+            newKeys[entry.name] = entry
+        end
+
+        -- Animate OUT + destroy rows that are no longer needed
+        for name, row in Library._HUDRows do
+            if not newKeys[name] then
+                Library._HUDRows[name] = nil
+                -- slide out to the right and fade, then destroy
+                TweenService:Create(row, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+                    Position = UDim2.new(1, 40, 0, 0),
+                    BackgroundTransparency = 1,
+                }):Play()
+                -- also fade the label
+                local lbl = row:FindFirstChildWhichIsA("TextLabel")
+                if lbl then
+                    TweenService:Create(lbl, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+                        TextTransparency = 1,
+                    }):Play()
+                end
+                task.delay(0.16, function()
+                    row:Destroy()
+                end)
+            end
+        end
+
+        -- Add new rows or update existing ones
         for i, entry in sorted do
             Library._HUDOrder += 1
+            local richText = entry.name .. " <font transparency='0.5'>|</font> <font color='#a5b4fc'>" .. entry.value .. "</font>"
 
-            local row = Instance.new("Frame")
-            row.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
-            row.BackgroundTransparency = 0.3
-            row.Size = UDim2.new(0, 0, 0, 18)
-            row.AutomaticSize = Enum.AutomaticSize.X
-            row.LayoutOrder = Library._HUDOrder
-            row.ZIndex = 100
-            row.ClipsDescendants = false
-            row.AnchorPoint = Vector2.new(1, 0)
-            row.Parent = ActiveFeaturesContainer
+            local existing = Library._HUDRows[entry.name]
+            if existing then
+                -- Already exists — just update text + layout order
+                existing.LayoutOrder = Library._HUDOrder
+                local lbl = existing:FindFirstChildWhichIsA("TextLabel")
+                if lbl then lbl.Text = richText end
+            else
+                -- New row — create and animate in
+                local row = Instance.new("Frame")
+                row.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+                row.BackgroundTransparency = 0.3
+                row.Size = UDim2.new(0, 0, 0, 18)
+                row.AutomaticSize = Enum.AutomaticSize.X
+                row.LayoutOrder = Library._HUDOrder
+                row.ZIndex = 100
+                row.ClipsDescendants = false
+                row.AnchorPoint = Vector2.new(1, 0)
+                row.Position = UDim2.new(1, 40, 0, 0)
+                row.Parent = ActiveFeaturesContainer
 
-            local rowCorner = Instance.new("UICorner")
-            rowCorner.CornerRadius = UDim.new(0, 3)
-            rowCorner.Parent = row
+                local rowCorner = Instance.new("UICorner")
+                rowCorner.CornerRadius = UDim.new(0, 3)
+                rowCorner.Parent = row
 
-            local rowPad = Instance.new("UIPadding")
-            rowPad.PaddingLeft = UDim.new(0, 6)
-            rowPad.PaddingRight = UDim.new(0, 6)
-            rowPad.Parent = row
+                local rowPad = Instance.new("UIPadding")
+                rowPad.PaddingLeft = UDim.new(0, 6)
+                rowPad.PaddingRight = UDim.new(0, 6)
+                rowPad.Parent = row
 
-            local nameLbl = Instance.new("TextLabel")
-            nameLbl.BackgroundTransparency = 1
-            nameLbl.Size = UDim2.fromScale(1, 1)
-            nameLbl.AutomaticSize = Enum.AutomaticSize.X
-            nameLbl.Text = entry.name .. " <font transparency='0.5'>|</font> <font color='#a5b4fc'>" .. entry.value .. "</font>"
-            nameLbl.RichText = true
-            nameLbl.TextSize = 12
-            nameLbl.Font = Enum.Font.Nunito
-            nameLbl.TextColor3 = Color3.new(1, 1, 1)
-            nameLbl.TextXAlignment = Enum.TextXAlignment.Left
-            nameLbl.TextStrokeTransparency = 0.5
-            nameLbl.TextStrokeColor3 = Color3.new(0, 0, 0)
-            nameLbl.ZIndex = 101
-            nameLbl.Parent = row
+                local nameLbl = Instance.new("TextLabel")
+                nameLbl.BackgroundTransparency = 1
+                nameLbl.Size = UDim2.fromScale(1, 1)
+                nameLbl.AutomaticSize = Enum.AutomaticSize.X
+                nameLbl.Text = richText
+                nameLbl.RichText = true
+                nameLbl.TextSize = 12
+                nameLbl.Font = Enum.Font.Nunito
+                nameLbl.TextColor3 = Color3.new(1, 1, 1)
+                nameLbl.TextTransparency = 0.5
+                nameLbl.TextXAlignment = Enum.TextXAlignment.Left
+                nameLbl.TextStrokeTransparency = 0.5
+                nameLbl.TextStrokeColor3 = Color3.new(0, 0, 0)
+                nameLbl.ZIndex = 101
+                nameLbl.Parent = row
 
-            -- Animate in from right
-            row.Position = UDim2.new(1, 30, 0, 0)
-            TweenService:Create(row, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                Position = UDim2.fromScale(1, 0),
-            }):Play()
+                -- Animate in: slide from right + fade in
+                TweenService:Create(row, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                    Position = UDim2.fromScale(1, 0),
+                }):Play()
+                TweenService:Create(nameLbl, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                    TextTransparency = 0,
+                }):Play()
+
+                Library._HUDRows[entry.name] = row
+            end
         end
     end
     Library:RefreshActiveHUD()
