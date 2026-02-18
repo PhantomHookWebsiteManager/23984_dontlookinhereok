@@ -6521,7 +6521,7 @@ function Library:CreateWindow(WindowInfo)
             Parent = RightWrapper,
         })
         New("UIFlexItem", {
-            FlexMode = Enum.UIFlexMode.Shrink,
+            FlexMode = Enum.UIFlexMode.Fill,
             Parent = SearchBox,
         })
         New("UICorner", {
