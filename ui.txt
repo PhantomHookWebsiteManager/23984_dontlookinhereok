@@ -6458,8 +6458,10 @@ function Library:CreateWindow(WindowInfo)
             TitleHolder.AbsoluteSize.X - (WindowInfo.Icon and WindowInfo.IconSize.X.Offset + 6 or 0) - 12
         )
         WindowTitle = New("TextLabel", {
+            AutomaticSize = Enum.AutomaticSize.X,
             BackgroundTransparency = 1,
-            Size = UDim2.new(0, X, 1, 0),
+            RichText = true,
+            Size = UDim2.new(0, 0, 1, 0),
             Text = WindowInfo.Title,
             TextSize = 18,
             TextTransparency = 0,
