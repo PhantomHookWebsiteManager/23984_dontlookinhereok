@@ -209,7 +209,7 @@ local Library = {
         WhiteColor = Color3.new(1, 1, 1),
     },
 
-    UITransparency = 0, -- global transparency for main panels
+    UITransparency = 0.3, -- global transparency for main panels
 
     Registry = {},
     Scales = {},
