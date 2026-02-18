@@ -1229,7 +1229,7 @@ do
             nameLbl.Text = entry.name .. " <font transparency='0.5'>|</font> <font color='#a5b4fc'>" .. entry.value .. "</font>"
             nameLbl.RichText = true
             nameLbl.TextSize = 12
-            nameLbl.Font = Enum.Font.NunitoBold
+            nameLbl.Font = Enum.Font.Nunito
             nameLbl.TextColor3 = Color3.new(1, 1, 1)
             nameLbl.TextXAlignment = Enum.TextXAlignment.Left
             nameLbl.TextStrokeTransparency = 0.5
