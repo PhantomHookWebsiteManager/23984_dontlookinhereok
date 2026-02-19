@@ -187,6 +187,8 @@ local Library = {
 
     CantDragForced = false,
 
+    KeyVerified = true,  -- set to false by KeySystem() until correct key entered
+
     Signals = {},
     UnloadSignals = {},
 
@@ -6289,6 +6291,12 @@ function Library:Notify(...)
 end
 
 function Library:CreateWindow(WindowInfo)
+    -- ── Key gate: block until the key system approves access ───────────────
+    if not Library.KeyVerified then
+        repeat task.wait(0.05) until Library.KeyVerified
+    end
+    -- ───────────────────────────────────────────────────────────────────────
+
     WindowInfo = Library:Validate(WindowInfo, Templates.Window)
     local ViewportSize: Vector2 = workspace.CurrentCamera.ViewportSize
     if RunService:IsStudio() and ViewportSize.X <= 5 and ViewportSize.Y <= 5 then
@@ -7952,10 +7960,14 @@ function Library:KeySystem(Options)
     local OnSuccess  = Options.OnSuccess or function() end
     local OnFail     = Options.OnFail    or function() end
 
+    -- Lock the UI gate immediately; CreateWindow() will wait until we verify
+    Library.KeyVerified = false
+
     -- Check saved key first
     if isfile and isfile(SaveFile) then
         local Saved = readfile and readfile(SaveFile) or ""
         if Saved:gsub("%s+", "") == ValidKey then
+            Library.KeyVerified = true
             task.spawn(OnSuccess)
             return
         end
@@ -8226,6 +8238,9 @@ function Library:KeySystem(Options)
             if writefile then
                 pcall(writefile, SaveFile, ValidKey)
             end
+
+            -- Unlock the main UI gate so CreateWindow() can proceed
+            Library.KeyVerified = true
 
             -- Success flash
             StatusLabel.Text      = KeySystemConfig.SuccessMessage
