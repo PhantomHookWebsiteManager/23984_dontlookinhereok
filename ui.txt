@@ -1279,13 +1279,8 @@ do
                 row.Parent = ActiveFeaturesContainer
 
                 local rowCorner = Instance.new("UICorner")
-                rowCorner.CornerRadius = UDim.new(0, 3)
+                rowCorner.CornerRadius = UDim.new(0, 0)
                 rowCorner.Parent = row
-
-                local rowPad = Instance.new("UIPadding")
-                rowPad.PaddingLeft = UDim.new(0, 3)
-                rowPad.PaddingRight = UDim.new(0, 3)
-                rowPad.Parent = row
 
                 local nameLbl = Instance.new("TextLabel")
                 nameLbl.BackgroundTransparency = 1
