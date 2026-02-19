@@ -1168,7 +1168,7 @@ do
 
     local HUDList = Instance.new("UIListLayout")
     HUDList.SortOrder = Enum.SortOrder.LayoutOrder
-    HUDList.Padding = UDim.new(0, 1)
+    HUDList.Padding = UDim.new(0, 0)
     HUDList.HorizontalAlignment = Enum.HorizontalAlignment.Right
     HUDList.VerticalAlignment = Enum.VerticalAlignment.Top
     HUDList.FillDirection = Enum.FillDirection.Vertical
