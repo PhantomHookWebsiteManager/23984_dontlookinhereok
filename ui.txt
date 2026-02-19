@@ -1168,7 +1168,7 @@ do
 
     local HUDList = Instance.new("UIListLayout")
     HUDList.SortOrder = Enum.SortOrder.LayoutOrder
-    HUDList.Padding = UDim.new(0, 2)
+    HUDList.Padding = UDim.new(0, 1)
     HUDList.HorizontalAlignment = Enum.HorizontalAlignment.Right
     HUDList.VerticalAlignment = Enum.VerticalAlignment.Top
     HUDList.FillDirection = Enum.FillDirection.Vertical
@@ -1283,8 +1283,8 @@ do
                 rowCorner.Parent = row
 
                 local rowPad = Instance.new("UIPadding")
-                rowPad.PaddingLeft = UDim.new(0, 6)
-                rowPad.PaddingRight = UDim.new(0, 6)
+                rowPad.PaddingLeft = UDim.new(0, 3)
+                rowPad.PaddingRight = UDim.new(0, 3)
                 rowPad.Parent = row
 
                 local nameLbl = Instance.new("TextLabel")
