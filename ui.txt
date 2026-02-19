@@ -7894,6 +7894,40 @@ function Library:CreateWindow(WindowInfo)
         Library.IsRobloxFocused = false
     end))
 
+    function Window:Destroy()
+        -- Disconnect all signals created during this window
+        for _, Signal in Library.Signals do
+            pcall(function()
+                Signal:Disconnect()
+            end)
+        end
+        Library.Signals = {}
+
+        -- Destroy the main GUI frame and keybind frame
+        if MainFrame and MainFrame.Parent then
+            MainFrame:Destroy()
+        end
+        if Library.KeybindFrame and Library.KeybindFrame.Parent then
+            Library.KeybindFrame:Destroy()
+        end
+
+        -- Reset all Library state so CreateWindow can be called fresh
+        Library.Tabs = {}
+        Library.TabButtons = {}
+        Library.DependencyBoxes = {}
+        Library.KeybindToggles = {}
+        Library.ActiveTab = nil
+        Library.Toggled = false
+        Library.KeybindFrame = nil
+        Library.KeybindContainer = nil
+
+        -- Clear all element registries
+        table.clear(Labels)
+        table.clear(Buttons)
+        table.clear(Toggles)
+        table.clear(Options)
+    end
+
     return Window
 end
 
