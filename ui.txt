@@ -1282,6 +1282,11 @@ do
                 rowCorner.CornerRadius = UDim.new(0, 0)
                 rowCorner.Parent = row
 
+                local rowPad = Instance.new("UIPadding")
+                rowPad.PaddingLeft = UDim.new(0, 5)
+                rowPad.PaddingRight = UDim.new(0, 5)
+                rowPad.Parent = row
+
                 local nameLbl = Instance.new("TextLabel")
                 nameLbl.BackgroundTransparency = 1
                 nameLbl.Size = UDim2.fromScale(1, 1)
